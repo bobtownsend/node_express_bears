@@ -74,7 +74,6 @@ router
       res.json(bear);
     });
   })
-
   // update the bear with this id (accessed at PUT http://localhost:8080/api/bears/:bear_id)
   .put(function(req, res) {
     // use our bear model to find the bear we want
@@ -88,17 +87,21 @@ router
         if (err) res.send(err);
         res.json({ message: bear.name + " Bear updated!" });
       });
-    })
-    // delete the bear with this id (accessed at DELETE http://localhost:8080/api/bears/:bear_id)
-    .post(function(req, res) {
-        Bear.remove({
-            _id: req.params.bear_id
-        }, function(err, bear) {
-            if (err)
-                res.send(err);
-            res.json({ message: bear.name + " Bear deleted!" });
-        });
     });
+  })
+
+  // delete the bear with this id (accessed at DELETE http://localhost:8080/api/bears/:bear_id)
+  .delete(function(req, res) {
+    Bear.remove(
+      {
+        _id: req.params.bear_id
+      },
+      function(err, bear) {
+        if (err) res.send(err);
+        res.json({ message: bear.name + " Bear deleted!" });
+      }
+    );
+  });
 
 // REGISTER OUR ROUTES
 // all of our routes will be prefixed with /api
